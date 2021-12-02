@@ -1,0 +1,44 @@
+<h1>Formulario registro de usuarios</h1>
+<form action="" [formGroup]="formNewUser" (ngSubmit)="onSubmit()">
+    <input type="hidden" class="form-control" formControlName="id">
+    <div class="form-group">
+        <label for="">Nombre</label>
+        <input type="text" class="form-control" formControlName="name">
+        <div class="error" *ngIf="formNewUser.controls.name.errors && formNewUser.controls.name.touched">
+            El campo nombre es requerido
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label for="">password</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div class="error" *ngIf="formNewUser.controls.password.errors && formNewUser.controls.password.touched">
+            El campo password es requerido
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="">email</label>
+        <input type="email" class="form-control" formControlName="email">
+        <div class="error" *ngIf="formNewUser.controls.email.errors && formNewUser.controls.email.touched">
+            El campo email es requerido
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="">Tipo Cliente</label>
+
+        <select formControlName="userRoleId" id="userRoleId" class="form-control">
+            <option *ngFor="let tipoRole of arrRoleUsers; let i = index" [value]="tipoRole.id">
+              {{tipoRole.name}}
+            </option>
+          </select>
+
+        <div class="error" *ngIf="formNewUser.controls.userRoleId.errors && formNewUser.controls.userRoleId.touched">
+            El campo tipo cliente es requerido
+        </div>
+    </div>
+   <input type="submit" value="Enviar"  class="btn btn-success" [disabled]="!formNewUser.valid" *ngIf="
+   "/>
+   <button type="button" class="btn btn-warning"  (click)="onClickModificar()" *ngIf="isShowEdit" >Modificar</button>
+
+
+</form>
