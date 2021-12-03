@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/principal'},
   {path: 'principal', component:PrincipalComponent},
   {path: 'login', component:LoginComponent},
-  {path: 'clientes', component:UserComponent},
+  {path: 'users', component:UserComponent},
   {path: 'userForm', component:FormUserComponent},
   {path: 'logout', component:LogoutComponent}
 ];

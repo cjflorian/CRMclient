@@ -23,26 +23,24 @@ export class FormUserComponent implements OnInit {
   constructor(private userService: UserService, private userRoleService: UserRolesService, private router: Router) {
     this.arrRoleUsers = [];
     this.arrUsers = [];
-    this.isShowCreate=true;
-    this.isShowEdit=true;
     this.formNewUser =  new FormGroup({
-      id: new FormControl(''),
-      name: new FormControl('',[
+      Id: new FormControl(''),
+      Name: new FormControl('',[
         Validators.required
       ]),
-      password: new FormControl('',[
+      Password: new FormControl('',[
         Validators.required
       ]),
-      email: new FormControl('',[
+      Email: new FormControl('',[
         Validators.required
       ]),
-      userRoleId: new FormControl('',[
+      UserRoleId: new FormControl('',[
         Validators.required
       ])
     });
    }
   
-  ngOnInit(): void {
+  async ngOnInit() {
     let session = localStorage.getItem('user');
     //console.log(session);
       if(session!==null)
@@ -50,12 +48,29 @@ export class FormUserComponent implements OnInit {
         this.isLogin==true;
         this.myMethodSubs = this.userService.invokeMyMethod.subscribe(res => {
           console.log(res);
-          this.methodToBeCalled(res);
         });
-        
-        this.userRoleService.getAll()
-        .then(userrole => this.arrRoleUsers = userrole)
+
+        await this.userRoleService.getAll()
+        .then(usersRole => this.arrRoleUsers = usersRole)
         .catch(error => console.log(console.error(error)));
+        if (this.isShowCreate)
+        {
+            // ultimo id
+            await this.userService.getAll()
+            .then(users => this.arrUsers = users)
+            .catch(error => console.log(console.error(error)));
+            let len = this.arrUsers.length;
+            let ultimo = (this.arrUsers[len-1].id)+1;
+            console.log(ultimo);
+
+            this.formNewUser.patchValue({
+              Id: ultimo
+          });
+          
+        }
+        
+    
+
       }
       else
       {
@@ -73,17 +88,17 @@ export class FormUserComponent implements OnInit {
       const user = await this.userService.getById(id);
       
       this.formNewUser = new FormGroup({
-        id: new FormControl(user.id,[
+        Id: new FormControl(user.id,[
           Validators.required
         ]),
-        name: new FormControl(user.name,[
+        Name: new FormControl(user.name,[
           Validators.required
         ]),
-        password: new FormControl(user.password),
-        email: new FormControl(user.email,[
+        Password: new FormControl(user.password),
+        Email: new FormControl(user.email,[
           Validators.required
         ]),
-        userRoleId: new FormControl(user.userRoleId,[
+        UserRoleId: new FormControl(user.userRoleId,[
           Validators.required
         ])
       });
@@ -95,9 +110,14 @@ export class FormUserComponent implements OnInit {
     }
 
     
-  public onSubmit(): void{
+  async onSubmit(){
     
+   
+    let form = this.formNewUser.value;
+    console.log(form);
 
+    
+    
     this.userService.create(this.formNewUser.value).then(function(res:any){
       Swal.fire('Creado con exito','Dato', 'success');
       
@@ -107,9 +127,7 @@ export class FormUserComponent implements OnInit {
       Swal.fire('Error: '+error.error.mensaje,error.error.error, 'error');
     });
     this.userService.callMyNewMethod();
-    //this.formNewCliente.reset();
-    //$('#myModalInsert').modal('hide');
-    this.router.navigate(['/user']);
+    this.router.navigate(['/users']);
   }
 
   

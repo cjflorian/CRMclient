@@ -1,18 +1,17 @@
 export class Users{
-  id: number;
-  name: string;
-  password: string;
-  email: string;
-  userRoleID: number;
-  token: string;
+  Id: number;
+  Name: string;
+  Password: string;
+  UserRoleID: number;
+  Email: string;
+  
 
-  constructor(pId:number, pName: string, pPassword:string, pEmail:string, pUserRoleID:number, pToken:string)
+  constructor(pId:number, pName: string, pPassword:string, pEmail:string, pUserRoleID:number)
   {
-      this.id = pId;
-      this.name = pName;
-      this.email = pEmail;
-      this.userRoleID = pUserRoleID;
-      this.password =pPassword;
-      this.token = pToken;
+      this.Id = pId;
+      this.Name = pName;
+      this.Email = pEmail;
+      this.Password =pPassword;
+      this.UserRoleID = pUserRoleID;
   }
 }

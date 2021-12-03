@@ -15,7 +15,8 @@ export class UserService {
   baseUrl: string;
   user: Users[];
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+    //this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+    this.baseUrl="https://localhost:44336/api/users"
     this.user =[]; 
    }//inyeccion de cliente
 
@@ -52,6 +53,7 @@ export class UserService {
 
 
   create(user: any): Promise<any[]>{
+    debugger;
     const bodyRequest = user;
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
@@ -61,6 +63,8 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
+    
+    console.log(bodyRequest)
     return this.httpClient.post<any>(this.baseUrl, bodyRequest, httpOptions).toPromise();
   }
 
@@ -74,7 +78,6 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    const id = user.id;
     const result = this.httpClient.put<any>(`${this.baseUrl}`, bodyRequest,  httpOptions).toPromise();
     return result;
   }
