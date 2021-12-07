@@ -37,7 +37,7 @@ export class UserComponent implements OnInit {
 
   async ngOnInit() {
     let session = localStorage.getItem('user');
-    console.log("comp"+session);
+    //console.log("comp"+session);
       if(session!==null)
       {
         this.isLogin==true;
@@ -60,6 +60,7 @@ export class UserComponent implements OnInit {
     await this.userService.getAll()
     .then(users => this.arrUsers = users)
     .catch(error => console.log(console.error(error)));
+    console.log(this.arrUsers);
   }
 
   
@@ -78,7 +79,7 @@ export class UserComponent implements OnInit {
   async onClickDetalle(id:any){
     try{
       const user = await this.userService.getById(id);
-      console.log(user);
+      //console.log(user);
       this.id = user.id;
       this.name = user.name;
       this.password = user.password;

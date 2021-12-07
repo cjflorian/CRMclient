@@ -2,10 +2,8 @@ export class Users{
   Id: number;
   Name: string;
   Password: string;
-  UserRoleID: number;
   Email: string;
-  
-
+  UserRoleID: number;
   constructor(pId:number, pName: string, pPassword:string, pEmail:string, pUserRoleID:number)
   {
       this.Id = pId;

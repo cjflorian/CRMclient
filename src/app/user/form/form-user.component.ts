@@ -34,7 +34,7 @@ export class FormUserComponent implements OnInit {
       Email: new FormControl('',[
         Validators.required
       ]),
-      UserRoleId: new FormControl('',[
+      UserRoleId: new FormControl(0,[
         Validators.required
       ])
     });
@@ -47,7 +47,7 @@ export class FormUserComponent implements OnInit {
       {
         this.isLogin==true;
         this.myMethodSubs = this.userService.invokeMyMethod.subscribe(res => {
-          console.log(res);
+          //console.log(res);
         });
 
         await this.userRoleService.getAll()
@@ -61,7 +61,7 @@ export class FormUserComponent implements OnInit {
             .catch(error => console.log(console.error(error)));
             let len = this.arrUsers.length;
             let ultimo = (this.arrUsers[len-1].id)+1;
-            console.log(ultimo);
+            //console.log(ultimo);
 
             this.formNewUser.patchValue({
               Id: ultimo
@@ -102,7 +102,7 @@ export class FormUserComponent implements OnInit {
           Validators.required
         ])
       });
-     console.log(user);
+     //console.log(user);
         }
     catch(error){
       console.log(error);
@@ -112,18 +112,11 @@ export class FormUserComponent implements OnInit {
     
   async onSubmit(){
     
-   
-    let form = this.formNewUser.value;
-    console.log(form);
-
-    
-    
     this.userService.create(this.formNewUser.value).then(function(res:any){
+      console.log(res);
       Swal.fire('Creado con exito','Dato', 'success');
-      
     })
     .catch(error => {
-      console.log(error);
       Swal.fire('Error: '+error.error.mensaje,error.error.error, 'error');
     });
     this.userService.callMyNewMethod();
@@ -132,7 +125,7 @@ export class FormUserComponent implements OnInit {
 
   
   onClickModificar(){
-    console.log(this.formNewUser.value);
+    //console.log(this.formNewUser.value);
     this.userService.update(this.formNewUser.value).then(function(res:any){
       Swal.fire('Modificado con exito','Dato', 'success');
     })

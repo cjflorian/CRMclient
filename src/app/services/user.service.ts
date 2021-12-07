@@ -13,11 +13,9 @@ export class UserService {
   invokeMyMethod = new EventEmitter();
   invokeMyNewMethod = new EventEmitter();
   baseUrl: string;
-  user: Users[];
   constructor(private httpClient: HttpClient) {
-    //this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
-    this.baseUrl="https://localhost:44336/api/users"
-    this.user =[]; 
+    this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+    //this.baseUrl="https://localhost:44336/api/users"
    }//inyeccion de cliente
 
    changeMessage(message: string) {
@@ -52,9 +50,8 @@ export class UserService {
   }
 
 
-  create(user: any): Promise<any[]>{
-    debugger;
-    const bodyRequest = user;
+  create(user: any): Promise<Users[]>{
+   
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
     let tokenFormat = 'Bearer '+token["token"]
@@ -63,9 +60,12 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    
-    console.log(bodyRequest)
-    return this.httpClient.post<any>(this.baseUrl, bodyRequest, httpOptions).toPromise();
+    let usrRoleID = parseInt(user.UserRoleId);
+    let newUser = new Users(user.Id, user.Name, user.Password, user.Email, usrRoleID);
+    let response = this.httpClient.post<any>(this.baseUrl, newUser, httpOptions).toPromise();
+    debugger;
+    console.log(response);
+    return response;
   }
 
   update(user: any): Promise<any[]>{
