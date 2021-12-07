@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Users } from '../models/user/user.module';
 import { UserService } from '../services/user.service';
+import { FormUserComponent } from './form/form-user.component';
 
 @Component({
   selector: 'app-user',
@@ -22,6 +23,10 @@ export class UserComponent implements OnInit {
   @Input () nameRole: string;
   myNewMethodSubs: Subscription = new Subscription;
   isLogin: boolean = false; // hidden by default
+
+  @ViewChild("component1")
+  component1!: FormUserComponent;
+
 
   constructor(private userService: UserService, private router: Router) { 
     this.arrUsers = [];
@@ -43,9 +48,6 @@ export class UserComponent implements OnInit {
         this.isLogin==true;
         await this.ngLoad();
 
-        this.myNewMethodSubs = this.userService.invokeMyNewMethod.subscribe(res => {
-          this.ngLoad();
-        });
       }
       else
       {
@@ -72,8 +74,8 @@ export class UserComponent implements OnInit {
     
   }
 
-  onClickModificar(id:any){
-    this.userService.callMyMethod(id);
+  async onClickModificar(id:any){
+    this.userService.callToggle.next(id);
   }
 
   async onClickDetalle(id:any){

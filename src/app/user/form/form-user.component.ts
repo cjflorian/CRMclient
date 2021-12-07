@@ -38,6 +38,11 @@ export class FormUserComponent implements OnInit {
         Validators.required
       ])
     });
+
+    this.userService.callToggle.subscribe((data) => {
+      this.showEdit(data);
+    });
+    
    }
   
   async ngOnInit() {
@@ -46,10 +51,7 @@ export class FormUserComponent implements OnInit {
       if(session!==null)
       {
         this.isLogin==true;
-        this.myMethodSubs = this.userService.invokeMyMethod.subscribe(res => {
-          //console.log(res);
-        });
-
+      
         await this.userRoleService.getAll()
         .then(usersRole => this.arrRoleUsers = usersRole)
         .catch(error => console.log(console.error(error)));
@@ -80,7 +82,7 @@ export class FormUserComponent implements OnInit {
   }
 
   
-  async methodToBeCalled(id:any){
+  async showEdit(id:any){
     //what needs to done
     this.isShowCreate = false;
     this.isShowEdit = true;
@@ -119,7 +121,6 @@ export class FormUserComponent implements OnInit {
     .catch(error => {
       Swal.fire('Error: '+error.error.mensaje,error.error.error, 'error');
     });
-    this.userService.callMyNewMethod();
     this.router.navigate(['/users']);
   }
 
@@ -133,8 +134,7 @@ export class FormUserComponent implements OnInit {
       console.log(error);
       Swal.fire('Error: '+error.error.mensaje,error.error.error, 'error');
     });
-    this.userService.callMyNewMethod();
-    this.formNewUser.reset();
+    //this.formNewUser.reset();
     this.router.navigate(['/user']);
   }
 
