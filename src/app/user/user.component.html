@@ -5,6 +5,14 @@
   </button>
   
   <div class="container">
+      <h3>
+        Paginas: {{ numPages }}<br>
+        Num. pagina {{currentPage}}
+    </h3>
+    <div class="botones">
+        <button class="btn btn-primary" (click)="changePage(false)" [disabled]="currentPage === 1">Anterior</button>
+        <button class="btn btn-warning ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages"> Siguiente</button>
+    </div>
     <table class="table table-bordered table-hover">
       <thead>
         <tr>

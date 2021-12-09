@@ -23,6 +23,9 @@ export class UserComponent implements OnInit {
   @Input () nameRole: string;
   myNewMethodSubs: Subscription = new Subscription;
   isLogin: boolean = false; // hidden by default
+  currentPage: number;
+  numPages:number;
+  paginaActual: number;
 
   @ViewChild("component1")
   component1!: FormUserComponent;
@@ -38,6 +41,9 @@ export class UserComponent implements OnInit {
     this.userRoleId = 0;
     this.nameRole = "";
     this.message = "";
+    this.currentPage = 1;
+    this.numPages = this.currentPage;
+    this.paginaActual = this.currentPage;
   }
 
   async ngOnInit() {
@@ -59,8 +65,13 @@ export class UserComponent implements OnInit {
 
   
   async ngLoad() {
-    await this.userService.getAll()
-    .then(users => this.arrUsers = users)
+    await this.userService.getAll(this.currentPage)
+    //.then(users => this.arrUsers = users)
+    .then(response =>{
+      console.log(response);
+      this.arrUsers = response['resultado'];
+      this.numPages = response['totalPaginas'];
+    })
     .catch(error => console.log(console.error(error)));
     console.log(this.arrUsers);
   }
@@ -92,6 +103,17 @@ export class UserComponent implements OnInit {
     catch(error){
       console.log(error);
       }
+    }
+
+    async changePage(siguiente:any){
+      if(siguiente){
+        this.currentPage++;
+      }else{
+        this.currentPage--;
+      }
+  
+      const response = await this.userService.getAll(this.currentPage);
+      this.arrUsers = response['results'];
     }
 
 }

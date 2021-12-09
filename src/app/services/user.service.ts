@@ -16,7 +16,7 @@ export class UserService {
    }//inyeccion de cliente
 
 
-   getAll(): Promise<any[]>{
+   getAll(pPage = 1): Promise<any>{
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
     let tokenFormat = 'Bearer '+token["token"]
@@ -25,7 +25,8 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    return this.httpClient.get<any[]>(this.baseUrl, httpOptions).toPromise();
+    return this.httpClient.get<any>(`${this.baseUrl}?orden=id&tipo_orden=ASC&pagina=${pPage}&registros_por_pagina=10`, httpOptions).toPromise();
+    //?orden=id&tipo_orden=ASC&pagina=2&registros_por_pagina=10
   }
 
   //observable
@@ -39,6 +40,7 @@ export class UserService {
       })
     }
     return this.httpClient.get<any>(`${this.baseUrl}/${pId}`, httpOptions).toPromise();
+    
 
   }
 
