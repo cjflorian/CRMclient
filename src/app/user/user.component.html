@@ -1,85 +1,98 @@
 <button class="btn btn-primary" [routerLink]="['/userForm']">
-    <span class="fa fa-plus"></span>
-    Nuevo clientes
-  
-  </button>
-  
-  <div class="container">
-      <h3>
-        Paginas: {{ numPages }}<br>
-        Num. pagina {{currentPage}}
+  <span class="fa fa-plus"></span>
+  Nuevo clientes
+
+</button>
+
+<div class="container">
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">password</th>
+        <th scope="col">email</th>
+        <th scope="col">Role</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of arrUsers; index as i">
+        <th scope="row"> {{user.id}}</th>
+        <td>{{user.name}}</td>
+        <td>{{user.password}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.nameRole}}</td>
+        <td>
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+            (click)="onClickDetalle(user.id)">Detalle</button>
+          <button type="button" class="btn btn-warning btn-lg"
+            (click)="onClickModificar(user.id)">Modificar</button>
+          <button type="button" class="btn btn-danger btn-lg" (click)="onClickEliminar(user.id)">Eliminar</button>
+
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <div class="botones">
+    <h3>
+      Paginas: {{ numPages }}<br>
+      Num. pagina {{currentPage}}
     </h3>
-    <div class="botones">
-        <button class="btn btn-primary" (click)="changePage(false)" [disabled]="currentPage === 1">Anterior</button>
-        <button class="btn btn-warning ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages"> Siguiente</button>
-    </div>
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">name</th>
-          <th scope="col">password</th>
-          <th scope="col">email</th>
-          <th scope="col">Role</th>
-          <th scope="col">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of arrUsers; index as i" >
-          <th scope="row"> {{user.id}}</th>
-          <td>{{user.name}}</td>
-          <td>{{user.password}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.nameRole}}</td>
-          <td>
-              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="onClickDetalle(user.id)">Detalle</button>
-              <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModalInsert" (click)="onClickModificar(user.id)">Modificar</button>
-              <button type="button" class="btn btn-danger btn-lg"  (click)="onClickEliminar(user.id)">Eliminar</button>
-  
-          </td>
-        </tr>
-      </tbody>
-  
-    </table>
-      
-  
-      
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="#myModal" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="myModal"> {{id}} - {{name}} </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <h5> Name: {{name}}  </h5>
-              <h6>Email: {{email}}</h6>
-              <h6>Password: {{password}}</h6>
-              <h6>Role: {{nameRole}}</h6>
-          </div>
-        </div>
+    <button class="btn btn-primary" (click)="changePage(false)" [disabled]="currentPage === 1">Anterior</button>
+    <button class="btn btn-warning ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages">
+      Siguiente</button>
+  </div>
+  <button style="margin: 50px; padding: 10px" type="button" class="btn btn-primary" (click)="openPopup()">Show Data
+  </button>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="#myModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModal"> {{id}} - {{name}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </div>
-  
-  
-       <!-- Insert Modal -->
-    <div class="modal fade" id="myModalInsert" tabindex="-1" role="dialog" aria-labelledby="#myModalInsert" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="myModalInsert">Detalles </h5>
-            <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <app-form-user></app-form-user>
-          </div>
-          
-        </div>
+      <div class="modal-body">
+        <h5> Name: {{name}} </h5>
+        <h6>Email: {{email}}</h6>
+        <h6>Password: {{password}}</h6>
+        <h6>Role: {{nameRole}}</h6>
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- Insert Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+
+  <!-- <div class="modal fade" id="myModalInsert" tabindex="-1" role="dialog" aria-labelledby="#myModalInsert" aria-hidden="true">
+        -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalInsert">Detalles </h5>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" 
+                  (click)="closePopup()">
+            x
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <app-form-user></app-form-user>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!-- </div> -->

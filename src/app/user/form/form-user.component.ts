@@ -55,24 +55,6 @@ export class FormUserComponent implements OnInit {
         await this.userRoleService.getAll()
         .then(usersRole => this.arrRoleUsers = usersRole)
         .catch(error => console.log(console.error(error)));
-        if (this.isShowCreate)
-        {
-            // ultimo id
-            await this.userService.getAll()
-            .then(users => this.arrUsers = users)
-            .catch(error => console.log(console.error(error)));
-            let len = this.arrUsers.length;
-            let ultimo = (this.arrUsers[len-1].id)+1;
-            //console.log(ultimo);
-
-            this.formNewUser.patchValue({
-              Id: ultimo
-          });
-          
-        }
-        
-    
-
       }
       else
       {
@@ -90,17 +72,17 @@ export class FormUserComponent implements OnInit {
       const user = await this.userService.getById(id);
       
       this.formNewUser = new FormGroup({
-        Id: new FormControl(user.id,[
+        Id: new FormControl(user[0].id,[
           Validators.required
         ]),
-        Name: new FormControl(user.name,[
+        Name: new FormControl(user[0].name,[
           Validators.required
         ]),
-        Password: new FormControl(user.password),
-        Email: new FormControl(user.email,[
+        Password: new FormControl(user[0].password),
+        Email: new FormControl(user[0].email,[
           Validators.required
         ]),
-        UserRoleId: new FormControl(user.userRoleId,[
+        UserRoleId: new FormControl(user[0].userRoleId,[
           Validators.required
         ])
       });
@@ -126,6 +108,7 @@ export class FormUserComponent implements OnInit {
 
   
   onClickModificar(){
+    debugger;
     //console.log(this.formNewUser.value);
     this.userService.update(this.formNewUser.value).then(function(res:any){
       Swal.fire('Modificado con exito','Dato', 'success');
@@ -135,7 +118,10 @@ export class FormUserComponent implements OnInit {
       Swal.fire('Error: '+error.error.mensaje,error.error.error, 'error');
     });
     //this.formNewUser.reset();
-    this.router.navigate(['/user']);
+    this.userService.reloadToggle.next();
+    this.userService.closedToggle.next();
+    this.router.navigate(['/users']);
+    
   }
 
 }

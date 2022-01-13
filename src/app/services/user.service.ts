@@ -10,9 +10,11 @@ export class UserService {
 
   baseUrl: string;
   callToggle = new Subject();
+  reloadToggle = new Subject();
+  closedToggle = new Subject();
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
-    //this.baseUrl="https://localhost:44336/api/users"
+    //this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+    this.baseUrl="https://localhost:5001/api/users"
    }//inyeccion de cliente
 
 
@@ -25,7 +27,8 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    return this.httpClient.get<any>(`${this.baseUrl}?orden=id&tipo_orden=ASC&pagina=${pPage}&registros_por_pagina=10`, httpOptions).toPromise();
+    let newURL = `${this.baseUrl}?orden=id&tipo_orden=ASC&pagina=${pPage}&registros_por_pagina=10`;
+    return this.httpClient.get<any>(newURL, httpOptions).toPromise();
     //?orden=id&tipo_orden=ASC&pagina=2&registros_por_pagina=10
   }
 
@@ -40,13 +43,12 @@ export class UserService {
       })
     }
     return this.httpClient.get<any>(`${this.baseUrl}/${pId}`, httpOptions).toPromise();
-    
-
+   
   }
 
 
   create(user: any): Promise<Users[]>{
-   
+    debugger;
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
     let tokenFormat = 'Bearer '+token["token"]
@@ -56,10 +58,10 @@ export class UserService {
       })
     }
     let usrRoleID = parseInt(user.UserRoleId);
-    let newUser = new Users(user.Id, user.Name, user.Password, user.Email, usrRoleID);
+    let newUser = new Users(0, user.Name, user.Password, user.Email, usrRoleID);
     let response = this.httpClient.post<any>(this.baseUrl, newUser, httpOptions).toPromise();
-    debugger;
-    console.log(response);
+    
+    //console.log(response);
     return response;
   }
 
@@ -76,7 +78,7 @@ export class UserService {
     
     let usrRoleID = parseInt(user.UserRoleId);
     let editUser = new Users(user.Id, user.Name, user.Password, user.Email, usrRoleID);
-    console.log(editUser);
+    //console.log(editUser);
     const result = this.httpClient.put<any>(this.baseUrl, editUser,  httpOptions).toPromise();
     return result;
   }
