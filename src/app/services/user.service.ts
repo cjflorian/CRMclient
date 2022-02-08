@@ -13,21 +13,30 @@ export class UserService {
   reloadToggle = new Subject();
   closedToggle = new Subject();
   constructor(private httpClient: HttpClient) {
-    //this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
-    this.baseUrl="https://localhost:5001/api/users"
+    this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+    //this.baseUrl="https://localhost:5001/api/users"
    }//inyeccion de cliente
 
 
-   getAll(pPage = 1): Promise<any>{
+   getAll(pPage = 1, orden='id', tipo_orden='ASC', buscar: any): Promise<any>{
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
-    let tokenFormat = 'Bearer '+token["token"]
+    let tokenFormat = 'Bearer '+token["token"];
+    let newURL = '';
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization':tokenFormat
       })
     }
-    let newURL = `${this.baseUrl}?orden=id&tipo_orden=ASC&pagina=${pPage}&registros_por_pagina=10`;
+    console.log('busqueda: '+buscar)
+    if(buscar=='')
+    {
+      newURL = `${this.baseUrl}?orden=${orden}&tipo_orden=${tipo_orden}&pagina=${pPage}&registros_por_pagina=10`;
+    }
+    else
+    {
+      newURL = `${this.baseUrl}?buscar=${buscar}`;
+    }
     return this.httpClient.get<any>(newURL, httpOptions).toPromise();
     //?orden=id&tipo_orden=ASC&pagina=2&registros_por_pagina=10
   }

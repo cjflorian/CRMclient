@@ -1,6 +1,19 @@
 .botones
 {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.up{
+    background-color: red;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+
+.down{
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-size: 25px;
 }

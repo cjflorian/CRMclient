@@ -5,15 +5,32 @@
 </button>
 
 <div class="container">
-
+  <div class="panel panel-default">
+    <input type="text" class="form-control" (keypress)="keyPressSearch($event)" placeholder="Search..." ><span class="fa fa-search"></span> 
+  </div>
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">name</th>
-        <th scope="col">password</th>
-        <th scope="col">email</th>
-        <th scope="col">Role</th>
+        <th scope="col">id 
+              <span class="	fa fa-sort-desc"  *ngIf="flag" (click)="orderBy('id','DESC')"> </span>  
+              <span class="	fa fa-sort-asc" *ngIf="!flag" (click)="orderBy('id','ASC')"></span>
+            </th>
+        <th scope="col">name
+          <span class="	fa fa-sort-desc" *ngIf="flag2" (click)="orderBy('name','DESC')" > </span>  
+          <span class="	fa fa-sort-asc" *ngIf="!flag2" (click)="orderBy('name','ASC')" ></span>
+        </th>
+        <th scope="col">password
+          <span class="	fa fa-sort-desc"  *ngIf="flag3" (click)="orderBy('password','DESC')" > </span>  
+          <span class="	fa fa-sort-asc" *ngIf="!flag3" (click)="orderBy('password','ASC')" ></span>
+        </th>
+        <th scope="col">email
+          <span class="	fa fa-sort-desc" *ngIf="flag4" (click)="orderBy('email','DESC')"> </span>  
+          <span class="	fa fa-sort-asc" *ngIf="!flag4" (click)="orderBy('email','ASC')"></span>
+        </th>
+        <th scope="col">Role
+          <span class="	fa fa-sort-desc" *ngIf="flag5" (click)="orderBy('Role','DESC')" > </span>  
+          <span class="	fa fa-sort-asc" *ngIf="!flag5" (click)="orderBy('Role','ASC')"></span>
+        </th>
         <th scope="col">Opciones</th>
       </tr>
     </thead>
@@ -38,15 +55,19 @@
   </table>
 
   <div class="botones">
-    <h3>
+    <button class="btn btn-default ml-2" (click)="changePage(false)" [disabled]="currentPage === 1">
+      <span class="fa fa-mail-reply"></span>
+    </button>
+    <button class="btn btn-default ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages">
+      <span class="fa fa-mail-forward"></span> 
+    </button>
+    <h5>
       Paginas: {{ numPages }}<br>
       Num. pagina {{currentPage}}
-    </h3>
-    <button class="btn btn-primary" (click)="changePage(false)" [disabled]="currentPage === 1">Anterior</button>
-    <button class="btn btn-warning ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages">
-      Siguiente</button>
+    </h5>
   </div>
   <button style="margin: 50px; padding: 10px" type="button" class="btn btn-primary" (click)="openPopup()">Show Data
+    
   </button>
 
 </div>
