@@ -10,12 +10,21 @@ export class PrincipalComponent implements OnInit {
   [x: string]: any;
   
   isLogin: boolean = false; // hidden by default
+  userName: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    this.userName = "";
+   }
+  
 
   ngOnInit(): void {
-    let session = localStorage.getItem('user');
-    console.log("comp"+session);
+    
+    let session:any  = localStorage.getItem('user');
+    console.log(session);
+    let usuario = JSON.parse(session);
+    let email = usuario["email"];
+    
+    this.userName = email;
       if(session!==null)
       {
         this.isLogin==true 

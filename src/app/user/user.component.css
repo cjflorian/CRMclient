@@ -11,6 +11,11 @@
     font-size: 25px;
 }
 
+.cmd{
+    display: flex;
+    justify-content: center;
+}
+
 .down{
     background-color: blue;
     text-align: center;

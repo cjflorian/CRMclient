@@ -104,6 +104,7 @@ export class UserComponent implements OnInit {
   }
 
   async onClickDetalle(id: any) {
+    this.openPopupView();
     try {
       const user = await this.userService.getById(id);
       console.log(user[0].id);
@@ -132,12 +133,19 @@ export class UserComponent implements OnInit {
   }
 
   displayStyle = "none";
+  displayStyleView = "none";
 
   openPopup() {
     this.displayStyle = "block";
   }
   closePopup() {
     this.displayStyle = "none";
+  }
+  openPopupView (){
+    this.displayStyleView ="block";
+  }
+  closePopupView (){
+    this.displayStyleView="none"
   }
 
   async keyPressSearch(search: any){

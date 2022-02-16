@@ -1,4 +1,4 @@
-<h1>Formulario registro de usuarios</h1>
+<h1 *ngIf="flag">Formulario de ingreso</h1>
 <form action="" [formGroup]="formNewUser" (ngSubmit)="onSubmit()">
     <input type="hidden" class="form-control" formControlName="Id">
     <div class="form-group">

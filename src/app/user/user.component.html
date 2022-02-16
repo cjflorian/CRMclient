@@ -1,119 +1,123 @@
-<button class="btn btn-primary" [routerLink]="['/userForm']">
-  <span class="fa fa-plus"></span>
-  Nuevo clientes
+<app-menu></app-menu>
 
-</button>
+<div class="panel panel-default">
+  <div class="panel-heading">Usuarios</div>
+  <div class="panel-body">
 
-<div class="container">
-  <div class="panel panel-default">
-    <input type="text" class="form-control" (keypress)="keyPressSearch($event)" placeholder="Search..." ><span class="fa fa-search"></span> 
-  </div>
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th scope="col">id 
-              <span class="	fa fa-sort-desc"  *ngIf="flag" (click)="orderBy('id','DESC')"> </span>  
+    <div class="cmd">
+      <button class="btn btn-primary" [routerLink]="['/userForm']">
+        Add New <span class="fa fa-plus"></span>
+      </button>
+    </div>
+
+    <div class="container">
+      <div class="panel panel-default">
+        <input type="text" class="form-control" (keypress)="keyPressSearch($event)" placeholder="Search..."><span
+          class="fa fa-search"></span>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">id
+              <span class="	fa fa-sort-desc" *ngIf="flag" (click)="orderBy('id','DESC')"> </span>
               <span class="	fa fa-sort-asc" *ngIf="!flag" (click)="orderBy('id','ASC')"></span>
             </th>
-        <th scope="col">name
-          <span class="	fa fa-sort-desc" *ngIf="flag2" (click)="orderBy('name','DESC')" > </span>  
-          <span class="	fa fa-sort-asc" *ngIf="!flag2" (click)="orderBy('name','ASC')" ></span>
-        </th>
-        <th scope="col">password
-          <span class="	fa fa-sort-desc"  *ngIf="flag3" (click)="orderBy('password','DESC')" > </span>  
-          <span class="	fa fa-sort-asc" *ngIf="!flag3" (click)="orderBy('password','ASC')" ></span>
-        </th>
-        <th scope="col">email
-          <span class="	fa fa-sort-desc" *ngIf="flag4" (click)="orderBy('email','DESC')"> </span>  
-          <span class="	fa fa-sort-asc" *ngIf="!flag4" (click)="orderBy('email','ASC')"></span>
-        </th>
-        <th scope="col">Role
-          <span class="	fa fa-sort-desc" *ngIf="flag5" (click)="orderBy('Role','DESC')" > </span>  
-          <span class="	fa fa-sort-asc" *ngIf="!flag5" (click)="orderBy('Role','ASC')"></span>
-        </th>
-        <th scope="col">Opciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of arrUsers; index as i">
-        <th scope="row"> {{user.id}}</th>
-        <td>{{user.name}}</td>
-        <td>{{user.password}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.nameRole}}</td>
-        <td>
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
-            (click)="onClickDetalle(user.id)">Detalle</button>
-          <button type="button" class="btn btn-warning btn-lg"
-            (click)="onClickModificar(user.id)">Modificar</button>
-          <button type="button" class="btn btn-danger btn-lg" (click)="onClickEliminar(user.id)">Eliminar</button>
+            <th scope="col">name
+              <span class="	fa fa-sort-desc" *ngIf="flag2" (click)="orderBy('name','DESC')"> </span>
+              <span class="	fa fa-sort-asc" *ngIf="!flag2" (click)="orderBy('name','ASC')"></span>
+            </th>
+            <th scope="col">password
+              <span class="	fa fa-sort-desc" *ngIf="flag3" (click)="orderBy('password','DESC')"> </span>
+              <span class="	fa fa-sort-asc" *ngIf="!flag3" (click)="orderBy('password','ASC')"></span>
+            </th>
+            <th scope="col">email
+              <span class="	fa fa-sort-desc" *ngIf="flag4" (click)="orderBy('email','DESC')"> </span>
+              <span class="	fa fa-sort-asc" *ngIf="!flag4" (click)="orderBy('email','ASC')"></span>
+            </th>
+            <th scope="col">Role
+              <span class="	fa fa-sort-desc" *ngIf="flag5" (click)="orderBy('Role','DESC')"> </span>
+              <span class="	fa fa-sort-asc" *ngIf="!flag5" (click)="orderBy('Role','ASC')"></span>
+            </th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of arrUsers; index as i">
+            <th scope="row"> {{user.id}}</th>
+            <td>{{user.name}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.nameRole}}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-lg" (click)="onClickDetalle(user.id)">Detalle</button>
+              <button type="button" class="btn btn-warning btn-lg"
+                (click)="onClickModificar(user.id)">Modificar</button>
+              <button type="button" class="btn btn-danger btn-lg" (click)="onClickEliminar(user.id)">Eliminar</button>
 
-        </td>
-      </tr>
-    </tbody>
+            </td>
+          </tr>
+        </tbody>
 
-  </table>
+      </table>
 
-  <div class="botones">
-    <button class="btn btn-default ml-2" (click)="changePage(false)" [disabled]="currentPage === 1">
-      <span class="fa fa-mail-reply"></span>
-    </button>
-    <button class="btn btn-default ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages">
-      <span class="fa fa-mail-forward"></span> 
-    </button>
-    <h5>
-      Paginas: {{ numPages }}<br>
-      Num. pagina {{currentPage}}
-    </h5>
-  </div>
-  <button style="margin: 50px; padding: 10px" type="button" class="btn btn-primary" (click)="openPopup()">Show Data
-    
-  </button>
-
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="#myModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="myModal"> {{id}} - {{name}} </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+      <div class="botones">
+        <button class="btn btn-default ml-2" (click)="changePage(false)" [disabled]="currentPage === 1">
+          <span class="fa fa-mail-reply"></span>
         </button>
-      </div>
-      <div class="modal-body">
-        <h5> Name: {{name}} </h5>
-        <h6>Email: {{email}}</h6>
-        <h6>Password: {{password}}</h6>
-        <h6>Role: {{nameRole}}</h6>
+        <button class="btn btn-default ml-2" (click)="changePage(true)" [disabled]="currentPage === numPages">
+          <span class="fa fa-mail-forward"></span>
+        </button>
+        <h5>
+          pags: {{ numPages }}<br>
+          No. pag {{currentPage}}
+        </h5>
       </div>
     </div>
-  </div>
-</div>
 
 
-<!-- Insert Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
-
-  <!-- <div class="modal fade" id="myModalInsert" tabindex="-1" role="dialog" aria-labelledby="#myModalInsert" aria-hidden="true">
-        -->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="myModalInsert">Detalles </h5>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" 
-                  (click)="closePopup()">
-            x
-          </button>
+    <!-- detail Modal -->
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyleView}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModal"> {{id}} - {{name}} </h5>
+            <button type="button" class="close" (click)="closePopupView()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5> Name: {{name}} </h5>
+            <h6>Email: {{email}}</h6>
+            <h6>Password: {{password}}</h6>
+            <h6>Role: {{nameRole}}</h6>
+          </div>
         </div>
       </div>
-      <div class="modal-body">
-        <app-form-user></app-form-user>
+    </div>
+
+    <!-- Insert Modal -->
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+
+      <!-- <div class="modal fade" id="myModalInsert" tabindex="-1" role="dialog" aria-labelledby="#myModalInsert" aria-hidden="true">
+        -->
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalInsert">Detalles </h5>
+            <div class="modal-footer">
+              <button type="button" class="close" (click)="closePopup()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <app-form-user></app-form-user>
+          </div>
+
+        </div>
       </div>
-     
     </div>
   </div>
 </div>
+
 <!-- </div> -->

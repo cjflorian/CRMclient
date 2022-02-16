@@ -11,6 +11,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { FormUserComponent } from './user/form/form-user.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     PrincipalComponent,
     FormUserComponent,
-    LogoutComponent
+    LogoutComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

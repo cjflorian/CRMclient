@@ -20,9 +20,11 @@ export class FormUserComponent implements OnInit {
   arrUsers: any[];
   arrRoleUsers: any[];
   isLogin: boolean = false; // hidden by default
+  flag: boolean = true;
   constructor(private userService: UserService, private userRoleService: UserRolesService, private router: Router) {
     this.arrRoleUsers = [];
     this.arrUsers = [];
+    this.flag = true;
     this.formNewUser =  new FormGroup({
       Id: new FormControl(''),
       Name: new FormControl('',[
@@ -66,6 +68,7 @@ export class FormUserComponent implements OnInit {
   
   async showEdit(id:any){
     //what needs to done
+    this.flag = false;
     this.isShowCreate = false;
     this.isShowEdit = true;
     try{
