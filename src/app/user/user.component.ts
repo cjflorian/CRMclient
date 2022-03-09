@@ -154,60 +154,60 @@ export class UserComponent implements OnInit {
     this.arrUsers = response['resultado'];
   }
 
-  
 
-  async orderBy(filtro: any, orden: any){
-    
+
+  async orderBy(filtro: any, orden: any) {
+
     switch (filtro) {
       case 'id':
-          this.flag = !this.flag;
-          await this.userService.getAll(this.currentPage,filtro,orden,'')
-            .then(response => {
-              this.arrUsers = response['resultado'];
-              this.numPages = response['totalPaginas'];
-            })
-            .catch(error => console.log(console.error(error)));
-          break;
-      case 'name':
-          this.flag2 = !this.flag2;
-          await this.userService.getAll(this.currentPage,filtro,orden,'')
-            .then(response => {
-              this.arrUsers = response['resultado'];
-              this.numPages = response['totalPaginas'];
-            })
-            .catch(error => console.log(console.error(error)));
-          break;
-          case 'password':
-              this.flag3 = !this.flag3;
-              await this.userService.getAll(this.currentPage,filtro,orden,'')
-                .then(response => {
-                  this.arrUsers = response['resultado'];
-                  this.numPages = response['totalPaginas'];
-                })
-                .catch(error => console.log(console.error(error)));
-              break;
-       case 'email':
-        this.flag4 = !this.flag4;
-        await this.userService.getAll(this.currentPage,filtro,orden,'')
+        this.flag = !this.flag;
+        await this.userService.getAll(this.currentPage, filtro, orden, '')
           .then(response => {
             this.arrUsers = response['resultado'];
             this.numPages = response['totalPaginas'];
           })
           .catch(error => console.log(console.error(error)));
         break;
-      
-        case 'Role':
-          this.flag5 = !this.flag5;
-          await this.userService.getAll(this.currentPage,filtro,orden,'')
-            .then(response => {
-              this.arrUsers = response['resultado'];
-              this.numPages = response['totalPaginas'];
-            })
-            .catch(error => console.log(console.error(error)));
-          break;
+      case 'name':
+        this.flag2 = !this.flag2;
+        await this.userService.getAll(this.currentPage, filtro, orden, '')
+          .then(response => {
+            this.arrUsers = response['resultado'];
+            this.numPages = response['totalPaginas'];
+          })
+          .catch(error => console.log(console.error(error)));
+        break;
+      case 'password':
+        this.flag3 = !this.flag3;
+        await this.userService.getAll(this.currentPage, filtro, orden, '')
+          .then(response => {
+            this.arrUsers = response['resultado'];
+            this.numPages = response['totalPaginas'];
+          })
+          .catch(error => console.log(console.error(error)));
+        break;
+      case 'email':
+        this.flag4 = !this.flag4;
+        await this.userService.getAll(this.currentPage, filtro, orden, '')
+          .then(response => {
+            this.arrUsers = response['resultado'];
+            this.numPages = response['totalPaginas'];
+          })
+          .catch(error => console.log(console.error(error)));
+        break;
+
+      case 'Role':
+        this.flag5 = !this.flag5;
+        await this.userService.getAll(this.currentPage, filtro, orden, '')
+          .then(response => {
+            this.arrUsers = response['resultado'];
+            this.numPages = response['totalPaginas'];
+          })
+          .catch(error => console.log(console.error(error)));
+        break;
       default:
 
-  }
+    }
   }
 
 }

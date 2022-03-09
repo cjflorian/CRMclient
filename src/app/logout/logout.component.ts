@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, enableProdMode, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +17,10 @@ export class LogoutComponent implements OnInit {
     
     Swal.hideLoading();
     Swal.fire('Logout','Adios', 'success');
-    this.router.navigate(['principal']);
+    console.log(environment);
+    
+    
+    this.router.navigate(['login']);
   }
 
 }

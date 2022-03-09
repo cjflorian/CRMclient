@@ -1,27 +1,25 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, isDevMode } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Users } from '../models/user/user.module';
+import { Injectable, isDevMode } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Password } from '../models/password/password.module';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-
+export class PasswordService {
   baseUrl: string;
   callToggle = new Subject();
   reloadToggle = new Subject();
   closedToggle = new Subject();
   constructor(private httpClient: HttpClient) {
-    console.log(isDevMode());
+    //this.baseUrl = 'https://ttq3pdorjg.execute-api.us-east-2.amazonaws.com/Prod/api/passwords';
+    //this.baseUrl="https://localhost:5001/api/passwords"
     if (isDevMode())
-    this.baseUrl = 'https://localhost:5001/api/users';
-  else
-    this.baseUrl = 'https://ttq3pdorjg.execute-api.us-east-2.amazonaws.com/Prod/api/users';
+      this.baseUrl = 'https://localhost:5001/api/passwords';
+    else
+      this.baseUrl = 'https://ttq3pdorjg.execute-api.us-east-2.amazonaws.com/Prod/api/passwords';
 
-    //this.baseUrl="https://localhost:5001/api/users"
-   }//inyeccion de cliente
-
+   }
 
    getAll(pPage = 1, orden='id', tipo_orden='ASC', buscar: any): Promise<any>{
     let session:any = localStorage.getItem('user');
@@ -33,7 +31,7 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    console.log('busqueda: '+buscar)
+    //console.log('busqueda: '+buscar)
     if(buscar=='')
     {
       newURL = `${this.baseUrl}?orden=${orden}&tipo_orden=${tipo_orden}&pagina=${pPage}&registros_por_pagina=10`;
@@ -42,8 +40,9 @@ export class UserService {
     {
       newURL = `${this.baseUrl}?buscar=${buscar}`;
     }
+    
+    console.log(newURL);
     return this.httpClient.get<any>(newURL, httpOptions).toPromise();
-    //?orden=id&tipo_orden=ASC&pagina=2&registros_por_pagina=10
   }
 
   //observable
@@ -61,7 +60,7 @@ export class UserService {
   }
 
 
-  create(user: any): Promise<Users[]>{
+  create(password: any): Promise<Password[]>{
     debugger;
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
@@ -71,16 +70,15 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    let usrRoleID = parseInt(user.UserRoleId);
-    let newUser = new Users(0, user.Name, user.Password, user.Email, usrRoleID);
+    // formato de ingreso
+    let userID = parseInt(password.UserID);
+    let newUser = new Password(0, password.Sitio, password.Password, password.Fecha, password.Activo, userID);
     let response = this.httpClient.post<any>(this.baseUrl, newUser, httpOptions).toPromise();
-    
     //console.log(response);
     return response;
   }
 
-  update(user: any): Promise<any[]>{
-    const bodyRequest = user;
+  update(password: any): Promise<any[]>{
     let session:any = localStorage.getItem('user');
     let token = JSON.parse(session);
     let tokenFormat = 'Bearer '+token["token"]
@@ -89,11 +87,11 @@ export class UserService {
         'Authorization':tokenFormat
       })
     }
-    
-    let usrRoleID = parseInt(user.UserRoleId);
-    let editUser = new Users(user.Id, user.Name, user.Password, user.Email, usrRoleID);
+     // formato de ingreso
+     let userID = parseInt(password.UserID);
+     let editPassword = new Password(0, password.Sitio, password.Password, password.Fecha, password.Activo, userID);
     //console.log(editUser);
-    const result = this.httpClient.put<any>(this.baseUrl, editUser,  httpOptions).toPromise();
+    const result = this.httpClient.put<any>(this.baseUrl, editPassword,  httpOptions).toPromise();
     return result;
   }
 
@@ -109,6 +107,4 @@ export class UserService {
     }
     return this.httpClient.delete<any>(`${this.baseUrl}/${pId}`,  httpOptions).toPromise();
   }
-
-
 }

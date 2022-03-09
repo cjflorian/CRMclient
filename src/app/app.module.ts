@@ -12,6 +12,8 @@ import { FormUserComponent } from './user/form/form-user.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from './menu/menu.component';
+import { PasswordComponent } from './passwords/password.component';
+import { FormPasswordComponent } from './passwords/form/form-password.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { MenuComponent } from './menu/menu.component';
     PrincipalComponent,
     FormUserComponent,
     LogoutComponent,
-    MenuComponent
+    MenuComponent,
+    PasswordComponent,
+    FormPasswordComponent
   ],
   imports: [
     BrowserModule,

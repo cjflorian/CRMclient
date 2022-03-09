@@ -10,7 +10,7 @@ export class UserRolesService {
   userroles: UserRoles[];
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'https://8d1obz8j0j.execute-api.us-east-2.amazonaws.com/Prod/api/user_roles';
+    this.baseUrl = 'https://ttq3pdorjg.execute-api.us-east-2.amazonaws.com/Prod/api/user_roles';
     this.userroles =[]; 
    }
 
